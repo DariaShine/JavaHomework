@@ -1,5 +1,7 @@
 package hw1;
 
+import java.util.Arrays;
+
 public class HomeWorkApp {
 
     public static void main(String[] args) {
@@ -37,11 +39,7 @@ public class HomeWorkApp {
     }
 
     public static boolean negativeNumber(int number) {
-        if(number>= 0){
-            return false;
-        } else {
-            return true;
-        }
+        return (number>= 0 ? (false) : (true));
     }
 
     public static void printStr(int number, String str){
