@@ -1,107 +1,148 @@
 package hw1;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 public class HomeWorkApp {
+    public static char symbolX = 'X';
+    public static char symbol0 = '0';
+    public static char symbolEmpty = '_';
+    public static final int SIZE = 5;
+    public static char[][] map;
+    public static Scanner sc = new Scanner(System.in);
+    public static Random rand = new Random();
 
     public static void main(String[] args) {
-        int[] arr = { 0, 1, 0, 1, 1, 0, 1, 0, 0, 1 };
-        inverseFunc(arr);
-        int[] arr1 = new int[100];
-        fillArray(arr1);
-        int[] arr3 = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
-        multiplyLessSix(arr3);
-        int[][] arr4 = new int[5][5];
-        fillUnits(arr4);
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Введите длину массива:");
-        int len = sc.nextInt();
-        System.out.println("Введите число заполнения массива:");
-        int initialValue = sc.nextInt();
-        doArray(len, initialValue);
-        int[] arr5 = {1, 3, 34, 23, 234, 63, 89, -490, 0};
-        findMinMax(arr5);
-        int[] arr6 = {1, 2, 3, 4, 2};
-        System.out.println(calcEquals(arr6));
+        initMap();
+        printMap();
+
+        while (true) {
+            turnPlayer();
+            if (checkWin(symbolX)) {
+                System.out.println("Победил человек!");
+                break;
+            }
+            if (isMapFull()) {
+                System.out.println("Ничья!");
+                break;
+            }
+            turnComp();
+            if (checkWin(symbol0)) {
+                System.out.println("Победил компьютер!");
+                break;
+            }
+            if (isMapFull()) {
+                System.out.println("Ничья!");
+                break;
+            }
+        }
     }
 
-    public static void inverseFunc(int[] arr){
-        for (int i = 0; i < arr.length; i++) {
-            if(arr[i] == 0){
-                arr[i] = 1;
+    public static void initMap() {
+        map = new char[SIZE][SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                map[j][i] = symbolEmpty;
+            }
+        }
+    }
+
+    public static void printMap() {
+        for (int i = 0; i <= SIZE; i++) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < SIZE; i++) {
+            System.out.print((i + 1) + " ");
+            for (int j = 0; j < SIZE; j++) {
+                System.out.print(map[j][i] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    public static void turnPlayer() {
+        int x, y;
+        do {
+            System.out.println("Введите координаты X");
+            x = sc.nextInt();
+            System.out.println("Введите координаты Y");
+            y = sc.nextInt();
+        } while (!isValidCoord(x, y));
+        map[x - 1][y - 1] = symbolX;
+        printMap();
+    }
+
+    public static void turnComp() {
+        int x, y;
+        do {
+            x = rand.nextInt(SIZE);
+            y = rand.nextInt(SIZE);
+        } while (!isValidCoord(x, y));
+        map[x - 1][y - 1] = symbol0;
+        printMap();
+    }
+
+    public static boolean isValidCoord(int x, int y) {
+        if (x > 0 && x <= SIZE && y > 0 && y <= SIZE && map[x - 1][y - 1] == symbolEmpty) {
+            return true;
+        } else {
+            System.out.println("Неверные координаты!");
+            return false;
+        }
+    }
+
+    public static boolean isMapFull() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (map[i][j] == symbolEmpty) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkWin(char symb) {
+        int countSymbolsColumn = 0;
+        int countSymbolsRow = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(map[i][j] == symb){
+                    countSymbolsColumn += 1;
+                }
+                if(map[j][i] == symb){
+                    countSymbolsRow += 1;
+                }
+            }
+            if (countSymbolsColumn == SIZE || countSymbolsRow == SIZE) {
+                return true;
             } else {
-                arr[i] = 0;
+                countSymbolsColumn = 0;
+                countSymbolsRow = 0;
             }
         }
-        System.out.println(Arrays.toString(arr));
-    }
-
-    public static void fillArray(int[] arr){
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = i+1;
-        }
-        System.out.println(Arrays.toString(arr));
-    }
-
-    public static void multiplyLessSix(int[] arr){
-        for (int i = 0; i < arr.length; i++) {
-            if(arr[i] < 6){
-                arr[i] *= 2;
-            }
-        }
-        System.out.println(Arrays.toString(arr));
-    }
-
-    public static void fillUnits(int[][] arr){
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                if(i == j || j == arr[i].length - i-1){
-                    arr[i][j] = 1;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (i == j  && map[i][j] == symb) {
+                    countSymbolsColumn += 1;
                 }
-                System.out.print(arr[i][j] + " ");
-            }
-           System.out.println();
-        }
-    }
-
-    public static void doArray(int len,  int initialValue){
-       int[] arr = new int[len];
-       for (int i = 0; i < arr.length; i++){
-           arr[i] = initialValue;
-        }
-        System.out.println(Arrays.toString(arr));
-    }
-
-    public static void findMinMax(int[] arr){
-        int min = arr[0];
-        int max = arr[0];
-        for(int i = 0; i < arr.length; i++){
-            if(arr[i] < min) {
-                min = arr[i];
-            } else if(arr[i] > max){
-                max= arr[i];
-            }
-        }
-        System.out.println("Минимальное значение: " + min);
-        System.out.println("Максимальное значение: " + max);
-    }
-
-    public static boolean calcEquals(int[] arr){
-        int sumLeft = 0;
-        int sumRight = 0;
-         for(int i = 0; i < arr.length; i++){
-             sumLeft = sumLeft + arr[i];
-                for(int j = i+1; j < arr.length; j++) {
-                    sumRight = sumRight + arr[j];
-                    if (sumLeft == sumRight) {
-                        return true;
-                    }
-                    sumRight = 0;
+                if (j == SIZE - i - 1 && map[j][i] == symb) {
+                    countSymbolsRow += 1;
                 }
-
+            }
+        }
+        if (countSymbolsColumn == SIZE || countSymbolsRow == SIZE) {
+            return true;
+        } else {
+            countSymbolsColumn = 0;
+            countSymbolsRow = 0;
         }
         return false;
     }
 }
+
+
 
