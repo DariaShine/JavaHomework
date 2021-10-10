@@ -18,7 +18,7 @@ public class Employee {
     }
 
     public Employee(){
-        this.name = "Иванов Иван Иванович";
+        this.name = "не определено";
         this.position = "не определена";
         this.email = "не опеределен";
         this.phone = "не опеределен";
