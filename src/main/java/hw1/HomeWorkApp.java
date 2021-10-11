@@ -15,7 +15,7 @@ public class HomeWorkApp {
         employeeArray[4] = new Employee("Кириллова Мария Ильинична", "Уборщица", "kirillova@gmail.com", "89046549874", 20000, 50);
 
         for (int i = 0; i < employeeArray.length; i++) {
-            if(employeeArray[i].age >= 40) {
+            if(employeeArray[i].getAge() >= 40) {
                 employeeArray[i].printInfo();
             }
         }

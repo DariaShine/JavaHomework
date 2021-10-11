@@ -1,12 +1,12 @@
 package hw1;
 
 public class Employee {
-    public String name;
-    public String position;
-    public String email;
-    public String phone;
-    public int salary;
-    public int age;
+    private String name;
+    private String position;
+    private String email;
+    private String phone;
+    private int salary;
+    private int age;
 
     public Employee(String name, String position, String email, String phone, int salary, int age){
         this.name = name;
@@ -28,6 +28,10 @@ public class Employee {
 
     public void printInfo(){
         System.out.println("Сотрудник " + name + " , должность " + position + " e-mail: " + email + " , phone: " + phone + " , зарплата " + salary + " , возвраст " + age);
+    }
+
+    public int getAge(){
+        return age;
     }
 
 }
