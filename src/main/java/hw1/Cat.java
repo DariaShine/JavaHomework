@@ -1,7 +1,7 @@
 package hw1;
 
 public class Cat extends Animal {
-    public Cat (String name, int dist){
+    public Cat (String name, int dist) {
         this.name = name;
         this.dist = dist;
     }
