@@ -29,6 +29,4 @@ public class Plate {
         food += n;
         System.out.println(n + " was added in the plate!");
     }
-
-
 }
