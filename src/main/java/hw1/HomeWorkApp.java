@@ -1,24 +1,34 @@
 package hw1;
 
-import javax.swing.*;
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class HomeWorkApp {
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        Animal cat = new Cat("Finik", 200);
-        Animal dog = new Dog("Sharik", 500);
+        Cat[] cats = {
+                new Cat("Finik", 10),
+                new Cat("Persik", 15),
+                new Cat("Fantik", 5)
+        };
 
-        cat.run();
-        dog.run();
+        Plate plate = new Plate(25);
+        plate.info();
 
-        cat.swim();
-        dog.dist = 10;
-        dog.swim();
+        for (Cat cat : cats) {
+            cat.info();
+            if(!plate.isEnought()){
+                System.out.println("There is no enought food in the plate! Input amount of food!");
+                int n = sc.nextInt();
+                plate.addFood(n);
+                plate.info();
+            }
+            cat.eat(plate);
+            cat.info();
+            plate.info();
+        }
+
     }
 }
-
-
-
 
