@@ -28,7 +28,6 @@ public class HomeWorkApp {
             cat.info();
             plate.info();
         }
-
     }
 }
 
